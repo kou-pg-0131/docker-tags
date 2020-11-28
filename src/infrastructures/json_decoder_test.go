@@ -23,8 +23,10 @@ type testJSONDecoderStruct struct {
 
 func TestJSONDecoder_Decode_ReturnNilWhenValidJSON(t *testing.T) {
 	d := new(JSONDecoder)
+
 	s := new(testJSONDecoderStruct)
 	j := `{"string":"a","int":1,"float64":1.1,"bool":true,"struct":{"key":"value"},"array":[{"key":"value"}],"map":{"key":"value"}}`
+
 	err := d.Decode(strings.NewReader(j), s)
 	assert.Nil(t, err)
 	assert.Equal(t, &testJSONDecoderStruct{
@@ -46,7 +48,10 @@ func TestJSONDecoder_Decode_ReturnNilWhenValidJSON(t *testing.T) {
 
 func TestJSONDecoder_Decode_InvalidJSON(t *testing.T) {
 	d := new(JSONDecoder)
+
 	j := "INVALID_JSON"
+
 	err := d.Decode(strings.NewReader(j), new(testJSONDecoderStruct))
+
 	assert.NotNil(t, err)
 }
