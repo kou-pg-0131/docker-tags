@@ -7,10 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDockerTagsPresenter_Show(t *testing.T) {
+func TestDockerTagsPresenter_ShowAll(t *testing.T) {
 	p := new(DockerTagsPresenter)
 
-	s := p.Show("IMAGE", &domain.DockerTags{
+	s := p.ShowAll("IMAGE", &domain.DockerTags{
 		{Name: "3"},
 		{Name: "1"},
 		{Name: "4"},

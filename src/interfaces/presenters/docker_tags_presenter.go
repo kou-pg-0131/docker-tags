@@ -9,7 +9,7 @@ import (
 
 // IDockerTagsPresenter ...
 type IDockerTagsPresenter interface {
-	Show(img string, ts *domain.DockerTags) string
+	ShowAll(img string, ts *domain.DockerTags) string
 }
 
 // DockerTagsPresenter ...
@@ -20,8 +20,8 @@ func NewDockerTagsPresenter() *DockerTagsPresenter {
 	return new(DockerTagsPresenter)
 }
 
-// Show ...
-func (p *DockerTagsPresenter) Show(img string, ts *domain.DockerTags) string {
+// ShowAll ...
+func (p *DockerTagsPresenter) ShowAll(img string, ts *domain.DockerTags) string {
 	ts.Sort()
 
 	rows := []string{}
