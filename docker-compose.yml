@@ -5,6 +5,8 @@ services:
     image: golang:1.15.5-alpine
     working_dir: /app
     entrypoint: go
+    environment:
+      CGO_ENABLED: '0'
     volumes:
       - .:/app
       - go:/go
