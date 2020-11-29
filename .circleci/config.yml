@@ -24,7 +24,7 @@ jobs:
     steps:
       - run:
           name: install required packages
-          command: apk add --update git bash
+          command: apk add --update git bash curl
       - checkout
       - go_mod_download
       - run:
