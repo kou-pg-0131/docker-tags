@@ -32,7 +32,7 @@ jobs:
           command: go test ./... -v -coverprofile=coverage.out -covermode=atomic
       - run:
           name: upload coverage reports to codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: curl -sL https://codecov.io/bash | bash -
 
 workflows:
   build:
