@@ -36,7 +36,25 @@ jobs:
           name: upload coverage reports to codecov
           command: curl -sL https://codecov.io/bash | bash -
 
+  lint:
+    executor: go
+    steps:
+      - run:
+          name: install required packages
+          command: apk add --update git
+      - checkout
+      - go_mod_download
+      - run:
+          name: go vet
+          command: go vet ./...
+      - run:
+          name: go lint
+          command: |
+            go get -u golang.org/x/lint/golint
+            golint -set_exit_status ./...
+
 workflows:
   build:
     jobs:
       - test
+      - lint
