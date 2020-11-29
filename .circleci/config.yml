@@ -24,10 +24,15 @@ jobs:
     steps:
       - run:
           name: install required packages
-          command: apk add --update git
+          command: apk add --update git bash
       - checkout
       - go_mod_download
-      - run: go test ./... -v
+      - run:
+          name: go test
+          command: go test ./... -v -coverprofile=coverage.out -covermode=atomic
+      - run:
+          name: upload coverage reports to codecov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   build:
