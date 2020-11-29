@@ -1,0 +1,35 @@
+version: 2.1
+
+executors:
+  go:
+    docker:
+      - image: golang:1.15.5-alpine
+        environment:
+          CGO_ENABLED: '0'
+
+commands:
+  go_mod_download:
+    steps:
+      - restore_cache:
+          key: v1-{{ .Branch }}-{{ checksum "go.sum" }}
+      - run: go mod download -x
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ checksum "go.sum" }}
+          paths:
+            - /go/pkg/mod
+
+jobs:
+  test:
+    executor: go
+    steps:
+      - run:
+          name: install required packages
+          command: apk add --update git
+      - checkout
+      - go_mod_download
+      - run: go test ./... -v
+
+workflows:
+  build:
+    jobs:
+      - test
