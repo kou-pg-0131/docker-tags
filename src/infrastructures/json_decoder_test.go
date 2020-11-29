@@ -21,6 +21,12 @@ type testJSONDecoderStruct struct {
 	} `json:"array"`
 }
 
+func Test_NewJSONDecoder(t *testing.T) {
+	d := NewJSONDecoder()
+
+	assert.NotNil(t, d)
+}
+
 func TestJSONDecoder_Decode_ReturnNilWhenValidJSON(t *testing.T) {
 	d := new(JSONDecoder)
 

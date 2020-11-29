@@ -8,6 +8,17 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_NewDockerTagsController(t *testing.T) {
+	mtp := new(mockDockerTagsPresenter)
+	mac := new(mockDockerAPIClient)
+
+	c := NewDockerTagsController(mtp, mac)
+
+	assert.NotNil(t, c)
+	assert.Equal(t, mtp, c.dockerTagsPresenter)
+	assert.Equal(t, mac, c.dockerAPIClient)
+}
+
 func TestDockerTagsController_ShowAll_ReturnNilWhenSuccess(t *testing.T) {
 	mac := new(mockDockerAPIClient)
 	mac.On("GetTags", "IMAGE").Return(&domain.DockerTags{{Name: "TAG"}}, nil)

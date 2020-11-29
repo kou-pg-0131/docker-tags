@@ -11,6 +11,16 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+func Test_NewDockerAPIClient(t *testing.T) {
+	c := NewDockerAPIClient()
+
+	assert.NotNil(t, c)
+	assert.NotNil(t, c.httpClient)
+	assert.IsType(t, &HTTPClient{}, c.httpClient)
+	assert.NotNil(t, c.jsonDecoder)
+	assert.IsType(t, &JSONDecoder{}, c.jsonDecoder)
+}
+
 func TestDockerAPIClient_GetTags_ReturnTagsWhenImageFound(t *testing.T) {
 	req, _ := http.NewRequest("GET", "https://registry.hub.docker.com/v1/repositories/IMAGE/tags", nil)
 	mhc := new(mockHTTPClient)

@@ -11,6 +11,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_NewHTTPClient(t *testing.T) {
+	c := NewHTTPClient()
+
+	assert.NotNil(t, c)
+	assert.NotNil(t, c.httpAPI)
+	assert.IsType(t, &http.Client{}, c.httpAPI)
+}
+
 func TestHTTPClient_Do_ReturnResponseWhenSuccess(t *testing.T) {
 	req, _ := http.NewRequest("GET", "https://example.com", nil)
 	mh := new(mockHTTPAPI)

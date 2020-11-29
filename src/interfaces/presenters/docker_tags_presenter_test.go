@@ -7,6 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_NewDockerTagsPresenter(t *testing.T) {
+	p := NewDockerTagsPresenter()
+
+	assert.NotNil(t, p)
+}
+
 func TestDockerTagsPresenter_ShowAll(t *testing.T) {
 	p := new(DockerTagsPresenter)
 

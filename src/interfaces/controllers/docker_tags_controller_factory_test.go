@@ -6,6 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_NewDockerTagsControllerFactory(t *testing.T) {
+	f := NewDockerTagsControllerFactory()
+
+	assert.NotNil(t, f)
+}
+
 func TestDockerTagsControllerFactory_Create(t *testing.T) {
 	f := new(DockerTagsControllerFactory)
 	c := f.Create()
