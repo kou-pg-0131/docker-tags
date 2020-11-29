@@ -54,7 +54,20 @@ func TestDockerAPIClient_GetTags_ReturnErrorWhenHTTPRequestFailed(t *testing.T) 
 	mhc.AssertNumberOfCalls(t, "Do", 1)
 }
 
-func TestDockerAPIClient_GetTags_ReturnErrorWhenHTTPResponseNotSuccess(t *testing.T) {
+func TestDockerAPIClient_GetTags_ReturnErrorWhenReceived404Response(t *testing.T) {
+	req, _ := http.NewRequest("GET", "https://registry.hub.docker.com/v1/repositories/IMAGE/tags", nil)
+	mhc := new(mockHTTPClient)
+	mhc.On("Do", req).Return(&HTTPResponse{Body: strings.NewReader("BODY"), StatusCode: 404}, nil)
+
+	c := &DockerAPIClient{httpClient: mhc}
+	ts, err := c.GetTags("IMAGE")
+
+	assert.EqualError(t, err, "image not found")
+	assert.Nil(t, ts)
+	mhc.AssertNumberOfCalls(t, "Do", 1)
+}
+
+func TestDockerAPIClient_GetTags_ReturnErrorWhenReceivedFailedResponse(t *testing.T) {
 	req, _ := http.NewRequest("GET", "https://registry.hub.docker.com/v1/repositories/IMAGE/tags", nil)
 	mhc := new(mockHTTPClient)
 	mhc.On("Do", req).Return(&HTTPResponse{Body: strings.NewReader("BODY"), StatusCode: 500}, nil)

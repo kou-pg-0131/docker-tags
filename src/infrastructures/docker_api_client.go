@@ -36,9 +36,14 @@ func (c *DockerAPIClient) GetTags(image string) (*domain.DockerTags, error) {
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		buf := new(bytes.Buffer)
-		buf.ReadFrom(resp.Body)
-		return nil, errors.New(buf.String())
+		switch resp.StatusCode {
+		case 404:
+			return nil, errors.New("image not found")
+		default:
+			buf := new(bytes.Buffer)
+			buf.ReadFrom(resp.Body)
+			return nil, errors.New(buf.String())
+		}
 	}
 
 	ts := new(domain.DockerTags)
